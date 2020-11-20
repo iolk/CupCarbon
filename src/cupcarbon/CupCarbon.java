@@ -7,17 +7,17 @@
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *----------------------------------------------------------------------------------------------------------------
- * CupCarbon U-One was part of the research project PERSEPTEUR supported by the 
- * French Agence Nationale de la Recherche ANR 
+ * CupCarbon U-One was part of the research project PERSEPTEUR supported by the
+ * French Agence Nationale de la Recherche ANR
  * under the reference ANR-14-CE24-0017.
  * ----------------------------------------------------------------------------------------------------------------
  * References:
@@ -64,42 +64,41 @@ import solver.SolverProxyParams;
 public class CupCarbon extends Application {
 
 	public static String cupcarbonSession = "";
-	
+
 	public static Stage stage;
 	public static CupCarbonController cupCarbonController;
-	public static boolean macos = false;	
-	
+	public static boolean macos = false;
+
 	@Override
 	public void start(Stage mainStage) throws Exception {
 		CupCarbon.stage = mainStage;
 		String os = System.getProperty ("os.name", "UNKNOWN");
-		
+
 		if(os != null && os.startsWith("Mac")) {
 			macos = true;
 			URL iconURL = CupCarbon.class.getResource("cupcarbon_logo.png");
 			java.awt.Image image = new ImageIcon(iconURL).getImage();
-			com.apple.eawt.Application.getApplication().setDockIconImage(image);
-			
+			//com.apple.eawt.Application.getApplication().setDockIconImage(image);
 		}
-		
+
 		CupActionStack.init();
-		
+
 		setUserAgentStylesheet(STYLESHEET_MODENA);
 		//setUserAgentStylesheet(Application.STYLESHEET_CASPIAN);
-	    
+
 		mainStage.setTitle("CupCarbon "+CupCarbonVersion.VERSION);
 		mainStage.getIcons().add(new Image(getClass().getResourceAsStream("cupcarbon_logo_small.png")));
-        
+
 		//stage.setMaximized(true);
 		FXMLLoader loader = new FXMLLoader();
-		
+
 		loader.setLocation(getClass().getResource("cupcarbon.fxml"));
 		Parent panneau = (BorderPane) loader.load();
 		Scene scene = new Scene(panneau);
 		mainStage.setScene(scene);
 		mainStage.show();
-		
-		
+
+
 		Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
 		    public void run() {
 				File curDir = new File(".");
@@ -113,9 +112,9 @@ public class CupCarbon extends Application {
 				}
 		    }
 		}));
-			
+
 	}
-	
+
 	public static String generateCode(int size) {
 		String code = "";
 		String chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
@@ -125,7 +124,7 @@ public class CupCarbon extends Application {
 		}
 		return code;
 	}
-	
+
 	public static void main(String[] args) {
 		System.out.println("Welcome to CupCarbon Version "+CupCarbonVersion.VERSION);
 		System.out.println("Session Generation ...");
@@ -136,7 +135,7 @@ public class CupCarbon extends Application {
 			SolverProxyParams.port = args[1];
 			setProxy();
 		}
-		
+
 		File file_code = new File("mqtt_code.par");
 		if(file_code.exists()) {
 			try {
@@ -161,10 +160,10 @@ public class CupCarbon extends Application {
 				e.printStackTrace();
 			}
 		}
-		
+
 		//CupCarbonServer server = new CupCarbonServer();
-		//server.start();		
-		
+		//server.start();
+
 		/*new Thread(new Runnable() {
 			@Override
 			public void run() {
@@ -178,16 +177,16 @@ public class CupCarbon extends Application {
 				}
 			}
 		}).start();*/
-		
+
 		launch(args);
 	}
-	
+
 	public static void setProxy() {
 		System.getProperties().put("http.proxySet", SolverProxyParams.proxyset);
 		System.getProperties().put("http.proxyHost", SolverProxyParams.host);
-		System.getProperties().put("http.proxyPort", SolverProxyParams.port); 		
+		System.getProperties().put("http.proxyPort", SolverProxyParams.port);
 	}
-	
+
 	public static boolean internetIsAvailable() {
 	    try {
 	        URL url = new URL("http://a.basemaps.cartocdn.com/light_all/0/0/0.png");
@@ -216,7 +215,7 @@ public class CupCarbon extends Application {
 							alert.showAndWait();
 						}
 					});
-	        	} 
+	        	}
 	        	else {
 	        		System.out.println("UPDATED VERSION");
 	        	}
@@ -229,8 +228,8 @@ public class CupCarbon extends Application {
 	    } catch (IOException e) {
 	        return false;
 	    }
-	    
-	    
+
+
 	}
 	// -----
 
