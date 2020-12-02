@@ -1,8 +1,17 @@
 package senscript_functions;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Arrays;
 
 import kakfa_connect.KafkaConnect;
+import project.Project;
 import security.Blowfish;
 import security.Operator;
 import security.SuperFastHash;
@@ -247,4 +256,24 @@ public class Functions {
     	return result;
     }
 
+    public static String getSensorsConfig(String[] args){
+    	String controller_id = args[0];
+    	String result = "";
+
+    	Path file = Paths.get(Project.projectPath+"\\sensors_delays.txt");
+    	try (InputStream in = Files.newInputStream(file);
+    			BufferedReader reader = new BufferedReader(new InputStreamReader(in))) {
+    	    String line = null;
+    	    while ((line = reader.readLine()) != null) {
+    	    	String[] params = line.split(" ");
+    	    	if(controller_id.equals(params[0])){
+    	    		result = params[1];
+    	    	}
+    	    }
+    	} catch (IOException x) {
+    	    System.err.println(x);
+    	}
+
+    	return result;
+    }
 }

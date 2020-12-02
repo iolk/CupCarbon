@@ -29,6 +29,10 @@ public class ScriptFunctions {
 			return new String[] { Functions.concatenate(args), "0.0", "0.0" };
 		}
 
+		if (function.equals("getSensorsConfig")) {
+			return new String[] { Functions.getSensorsConfig(args), "0.0", "0.0" };
+		}
+
 		if (function.equals("angle")) {
 			return new String[] { Functions.angle(args), "0.0", "0.0" };
 		}
